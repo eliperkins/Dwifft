@@ -9,23 +9,15 @@
 import UIKit
 
 /// These get returned from calls to LCS.diff(). They represent insertions or deletions that need to happen to transform array a into array b.
-public enum ArrayDiffResult : DebugPrintable {
+public enum ArrayDiffResult {
     case Insert(Int)
     case Delete(Int)
     var isInsertion: Bool {
         switch(self) {
-        case .Insert(let i):
+        case .Insert(_):
             return true
-        case .Delete(let i):
+        case .Delete(_):
             return false
-        }
-    }
-    public var debugDescription: String {
-        switch(self) {
-        case .Insert(let i):
-            return "+\(i)"
-        case .Delete(let i):
-            return "-\(i)"
         }
     }
     var idx: Int {
@@ -34,6 +26,17 @@ public enum ArrayDiffResult : DebugPrintable {
             return i
         case .Delete(let i):
             return i
+        }
+    }
+}
+
+extension ArrayDiffResult: CustomDebugStringConvertible {
+    public var debugDescription: String {
+        switch(self) {
+        case .Insert(let i):
+            return "+\(i)"
+        case .Delete(let i):
+            return "-\(i)"
         }
     }
 }
